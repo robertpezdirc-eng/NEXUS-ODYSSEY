@@ -1,0 +1,37 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main   # ali tvoja glavna veja
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1️⃣ Checkout kode
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # 2️⃣ Namestitev Node.js (če tvoja stran potrebuje npm build)
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20'
+
+    # 3️⃣ Build (če imaš npm projekt)
+    - name: Install dependencies and build
+      run: |
+        npm install
+        npm run build
+      # Če nimaš npm projekta, ta korak lahko izbrišeš
+
+    # 4️⃣ Deploy na GitHub Pages
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./dist   # mapa, kjer so build datoteke
+        # Če nimaš build map, npr. samo index.html, uporabi:
+        # publish_dir: ./
