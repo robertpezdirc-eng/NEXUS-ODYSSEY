@@ -1,0 +1,9 @@
+function logSession() {
+  const session = {
+    mission: "Dan 1: Test",
+    status: "ok"
+  };
+
+  // Prikaz izpisa pod gumbom
+  document.getElementById("output").textContent = JSON.stringify(session, null, 2);
+}
